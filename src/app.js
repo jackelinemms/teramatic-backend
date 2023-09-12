@@ -9,4 +9,10 @@ app.use(express.json());
 import db from "./config/database.js";
 db.connect();
 
+import router from "./routes/userRoutes.js";
+
+//definir a rota principal da minha API
+// o segundo parâmetro - router - vai pegar as configurações do userRoutes
+app.use("/users", router);
+
 export default app;
