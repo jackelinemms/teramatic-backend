@@ -1,6 +1,6 @@
-const UserSchema = require("../models/userSchema");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import UserSchema from "../models/userSchema.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const SECRET = process.env.SECRET;
 
@@ -37,6 +37,4 @@ const login = (req, res) => {
   }
 };
 
-module.exports = {
-  login,
-};
+export default login;

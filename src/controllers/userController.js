@@ -1,5 +1,8 @@
 import UserSchema from "../models/userSchema.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const SECRET = process.env.SECRET;
 
 //RESPONSÁVEL POR GERENCIAR A REQUISIÇÃO E RESPOSTA
 //essa funcao vai retornar uma resposta status 200 - tudo ok, se tiver tudo ok
@@ -14,6 +17,19 @@ import bcrypt from "bcrypt";
 //função assincrona pra esperar ele primeiro conectar ao banco
 //READ - lê o banco de dados e retorna os dados pedidos
 const getAll = async (req, res) => {
+  const authHeader = req.get("authorization");
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).send("Erro no header");
+  }
+
+  jwt.verify(token, SECRET, (err) => {
+    if (err) {
+      return res.status(401).send("Não autorizado");
+    }
+  });
+
   const users = UserSchema.find(function (err, users) {
     //query no banco de dados que retorna todos os usuarios. Ele acessa meu userSchema e faz um find e isso pode ser enviado como resposta
     if (err) {
