@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 const SECRET = process.env.SECRET;
 
 const login = (req, res) => {
+  console.log(req.body);
   try {
     UserSchema.findOne({ email: req.body.email }, (error, user) => {
       if (!user) {
