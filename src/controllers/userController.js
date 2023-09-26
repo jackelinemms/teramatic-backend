@@ -92,12 +92,14 @@ const updateUser = async (req, res) => {
 //find by id
 const findUserById = async (req, res) => {
   try {
-    UserSchema.findById(req.params.id);
+    const user = await UserSchema.findById(req.params.id);
     res.status(200).send({
       statusCode: 200,
+      data: user,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).send({ message: error.message });
+    console.error(error);
   }
 };
 // DELETE
@@ -105,7 +107,7 @@ const findUserById = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     //achar o usuario pelo id e deletar o usuario
-    await UserSchema.findByIdAndDelete(req.params.id);
+    await UserSchema.findByIdAndDelete(userId);
     //enviar resposta
     res.status(200).send({
       message: "Usuário deletado com sucesso",
