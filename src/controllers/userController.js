@@ -89,6 +89,17 @@ const updateUser = async (req, res) => {
   }
 };
 
+//find by id
+const findUserById = async (req, res) => {
+  try {
+    UserSchema.findById(req.params.id);
+    res.status(200).send({
+      statusCode: 200,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 // DELETE
 
 const deleteUser = async (req, res) => {
@@ -110,4 +121,5 @@ export default {
   createUser,
   updateUser,
   deleteUser,
+  findUserById,
 };
